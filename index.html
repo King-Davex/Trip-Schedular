@@ -80,10 +80,10 @@
                     <p class="text-slate-500 dark:text-slate-400">Optimizing your market run for Thursday, Oct 24th</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button
+                    <button id="darkModeToggle"
                         class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium shadow-sm">
-                        <span class="material-symbols-outlined text-base">share</span>
-                        Share Trip
+                        <span class="material-symbols-outlined text-base">dark_mode</span>
+                        Theme
                     </button>
                     <button
                         class="flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:brightness-110 transition-all">
@@ -106,49 +106,9 @@
                             <span
                                 class="px-2 py-1 bg-tidewater/30 text-poolhouse text-xs font-bold rounded uppercase tracking-wider">Active</span>
                         </div>
-                        <div
+                        <div id="trip-steps-container"
                             class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-100 dark:before:bg-slate-700">
-                            <div class="relative pl-8">
-                                <div
-                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-primary z-10 flex items-center justify-center">
-                                    <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-secondary uppercase">4:00 PM</p>
-                                    <p class="font-semibold text-slate-800 dark:text-white">Depart Office</p>
-                                    <p class="text-sm text-slate-500">Commute to Whole Foods (15 mins)</p>
-                                </div>
-                            </div>
-                            <div class="relative pl-8">
-                                <div
-                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-secondary z-10">
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-secondary uppercase">4:15 PM - 5:15 PM</p>
-                                    <p class="font-semibold text-slate-800 dark:text-white">Grocery Shopping</p>
-                                    <p class="text-sm text-slate-500">Targeting 60 mins efficiency window</p>
-                                </div>
-                            </div>
-                            <div class="relative pl-8">
-                                <div
-                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-poolhouse z-10">
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-secondary uppercase">5:15 PM</p>
-                                    <p class="font-semibold text-slate-800 dark:text-white">Checkout &amp; Loading</p>
-                                    <p class="text-sm text-slate-500">Anticipated wait time: 10 mins</p>
-                                </div>
-                            </div>
-                            <div class="relative pl-8">
-                                <div
-                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-tidewater z-10">
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-secondary uppercase">5:25 PM</p>
-                                    <p class="font-semibold text-slate-800 dark:text-white">Return Home</p>
-                                    <p class="text-sm text-slate-500">Expected arrival: 5:45 PM</p>
-                                </div>
-                            </div>
+                            <!-- Injected by app.js -->
                         </div>
                     </div>
                 </div>
@@ -169,66 +129,15 @@
                         <div class="mb-8">
                             <h4 class="text-xs font-bold text-poolhouse uppercase tracking-widest mb-4">High Priority
                             </h4>
-                            <div class="space-y-3">
-                                <div
-                                    class="group flex items-center justify-between p-3 rounded-xl bg-primary/5 border border-primary/20">
-                                    <div class="flex items-center gap-3">
-                                        <input class="w-5 h-5 rounded border-primary text-primary focus:ring-primary/20"
-                                            type="checkbox" />
-                                        <span class="font-medium">Organic Whole Milk</span>
-                                    </div>
-                                    <span
-                                        class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">Essential</span>
-                                </div>
-                                <div
-                                    class="group flex items-center justify-between p-3 rounded-xl bg-primary/5 border border-primary/20">
-                                    <div class="flex items-center gap-3">
-                                        <input class="w-5 h-5 rounded border-primary text-primary focus:ring-primary/20"
-                                            type="checkbox" />
-                                        <span class="font-medium">Free-range Eggs (12pk)</span>
-                                    </div>
-                                    <span
-                                        class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">Essential</span>
-                                </div>
+                            <div id="high-priority-list" class="space-y-3">
+                                <!-- Injected by app.js -->
                             </div>
                         </div>
                         <div>
                             <h4 class="text-xs font-bold text-poolhouse uppercase tracking-widest mb-4">General Items
                             </h4>
-                            <div class="space-y-3">
-                                <div
-                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
-                                    <div class="flex items-center gap-3">
-                                        <input
-                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
-                                            type="checkbox" />
-                                        <span class="text-slate-600 dark:text-slate-300">Avocados (3)</span>
-                                    </div>
-                                    <span
-                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
-                                </div>
-                                <div
-                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
-                                    <div class="flex items-center gap-3">
-                                        <input
-                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
-                                            type="checkbox" />
-                                        <span class="text-slate-600 dark:text-slate-300">Whole Grain Sourdough</span>
-                                    </div>
-                                    <span
-                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
-                                </div>
-                                <div
-                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
-                                    <div class="flex items-center gap-3">
-                                        <input
-                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
-                                            type="checkbox" />
-                                        <span class="text-slate-600 dark:text-slate-300">Greek Yogurt</span>
-                                    </div>
-                                    <span
-                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
-                                </div>
+                            <div id="general-items-list" class="space-y-3">
+                                <!-- Injected by app.js -->
                             </div>
                         </div>
                     </div>
@@ -243,32 +152,23 @@
                         <div class="space-y-4 relative z-10">
                             <div class="flex justify-between items-end border-b border-white/20 pb-2">
                                 <span class="text-white/70 text-sm">Estimated Time</span>
-                                <span class="text-2xl font-display font-bold">1h 45m</span>
+                                <span id="summary-total-time" class="text-2xl font-display font-bold">—</span>
                             </div>
                             <div class="flex justify-between items-end border-b border-white/20 pb-2">
                                 <span class="text-white/70 text-sm">Stops</span>
-                                <span class="text-xl font-display font-bold">1 Market</span>
+                                <span id="summary-stops" class="text-xl font-display font-bold">—</span>
                             </div>
                             <div class="flex justify-between items-end">
                                 <span class="text-white/70 text-sm">Efficiency Score</span>
-                                <span class="text-xl font-display font-bold">92%</span>
+                                <span id="summary-efficiency" class="text-xl font-display font-bold">—</span>
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 p-6 rounded-2xl">
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-amber-600 dark:text-amber-500">warning</span>
-                            <div>
-                                <h4 class="font-bold text-amber-900 dark:text-amber-200 text-sm">Peak Traffic Alert</h4>
-                                <p class="text-sm text-amber-800 dark:text-amber-400 mt-1">Heavy congestion expected on
-                                    Main St between 5:00 PM and 6:30 PM.</p>
-                                <button
-                                    class="mt-3 text-xs font-bold text-amber-900 dark:text-amber-300 underline underline-offset-4 decoration-amber-400/50">View
-                                    reroute options</button>
-                            </div>
-                        </div>
+
+                    <div id="alerts-container" class="space-y-4">
+                        <!-- Injected by app.js -->
                     </div>
+
                     <div
                         class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                         <h4 class="font-bold text-sm text-slate-800 dark:text-white mb-4">Market Insights</h4>
@@ -298,7 +198,69 @@
         </main>
     </div>
 
+    <!-- Navigation & Bottom Actions Section -->
+    <div id="new-trip-modal"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div
+            class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-8 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                <div>
+                    <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white">Configure New Trip</h3>
+                    <p class="text-slate-500 text-sm">Define your constraints for the optimization engine.</p>
+                </div>
+                <button id="close-modal-btn"
+                    class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="trip-config-form" class="p-8 space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-poolhouse uppercase tracking-wider">Start Time</label>
+                        <input type="time" name="currentTime" value="16:00"
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-primary focus:border-primary">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-poolhouse uppercase tracking-wider">Free Time
+                            (Minutes)</label>
+                        <input type="number" name="totalFreeTimeMinutes" value="120"
+                            class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <label class="text-xs font-bold text-poolhouse uppercase tracking-wider">Shopping Items (Comma
+                        separated)</label>
+                    <div class="space-y-3">
+                        <div class="space-y-2">
+                            <span class="text-xs font-medium text-slate-500">Essential (High Priority)</span>
+                            <textarea name="essentialItems"
+                                class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl p-3 text-sm focus:ring-primary focus:border-primary"
+                                rows="2">Rice, Vegetables, Eggs</textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs font-medium text-slate-500">Optional (General)</span>
+                            <textarea name="optionalItems"
+                                class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl p-3 text-sm focus:ring-primary focus:border-primary"
+                                rows="2">Bread, Yogurt, Fruit</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" id="cancel-btn"
+                        class="px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-8 py-2.5 bg-primary text-white rounded-xl text-sm font-semibold shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">Optimize
+                        My Trip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Application JavaScript -->
+    <script src="js/engine.js"></script>
     <script src="js/app.js"></script>
 </body>
 

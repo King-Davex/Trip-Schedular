@@ -1,203 +1,238 @@
-// Market Trip Scheduler - Main Application Logic
+/**
+ * MarketFlow Application Logic
+ * Integrates the MarketTripEngine with the UI and handles full interactivity.
+ */
 
-// Dark Mode Toggle
-function initDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const htmlElement = document.documentElement;
-
-    // Check for saved preference or default to light mode
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    htmlElement.classList.toggle('dark', currentTheme === 'dark');
-
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            const newTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
-            localStorage.setItem('theme', newTheme);
-        });
-    }
-}
-
-// Shopping List Functionality
-class ShoppingList {
+class UIController {
     constructor() {
-        this.items = [];
+        this.engine = new MarketTripEngine();
+        this.currentPlan = null;
         this.init();
     }
 
     init() {
-        this.loadItems();
-        this.attachEventListeners();
+        this.initDarkMode();
+        this.initModal();
+        this.initForm();
+        this.loadPlan();
     }
 
-    loadItems() {
-        const savedItems = localStorage.getItem('shoppingItems');
-        if (savedItems) {
-            this.items = JSON.parse(savedItems);
-        }
-    }
+    /**
+     * Theme management
+     */
+    initDarkMode() {
+        const toggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
 
-    saveItems() {
-        localStorage.setItem('shoppingItems', JSON.stringify(this.items));
-    }
-
-    addItem(name, priority = 'general') {
-        const item = {
-            id: Date.now(),
-            name: name,
-            priority: priority,
-            completed: false,
-            createdAt: new Date().toISOString()
+        const applyTheme = (theme) => {
+            html.classList.toggle('dark', theme === 'dark');
+            localStorage.setItem('theme', theme);
         };
-        this.items.push(item);
-        this.saveItems();
-        return item;
+
+        const currentTheme = localStorage.getItem('theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+        applyTheme(currentTheme);
+
+        toggle.addEventListener('click', () => {
+            const nextTheme = html.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(nextTheme);
+        });
     }
 
-    toggleItem(id) {
-        const item = this.items.find(i => i.id === id);
-        if (item) {
-            item.completed = !item.completed;
-            this.saveItems();
-        }
-    }
+    /**
+     * Modal Visibility
+     */
+    initModal() {
+        const modal = document.getElementById('new-trip-modal');
+        const openBtn = document.querySelector('button .material-symbols-outlined:contains("add")')?.parentElement ||
+            document.querySelector('button:has(span.material-symbols-outlined:contains("add"))') ||
+            document.querySelectorAll('header button')[1]; // Fallback to 2nd header button
 
-    deleteItem(id) {
-        this.items = this.items.filter(i => i.id !== id);
-        this.saveItems();
-    }
+        const closeBtns = [
+            document.getElementById('close-modal-btn'),
+            document.getElementById('cancel-btn'),
+            modal
+        ];
 
-    attachEventListeners() {
-        // Attach checkbox listeners
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                const itemElement = e.target.closest('.group');
-                if (itemElement) {
-                    itemElement.classList.toggle('opacity-50', e.target.checked);
+        openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+
+        closeBtns.forEach(btn => {
+            if (!btn) return;
+            btn.addEventListener('click', (e) => {
+                if (e.target === modal || btn !== modal) {
+                    modal.classList.add('hidden');
                 }
             });
         });
     }
-}
 
-// Trip Timeline Management
-class TripTimeline {
-    constructor() {
-        this.steps = [];
-        this.currentStep = 0;
+    /**
+     * Configuration Form
+     */
+    initForm() {
+        const form = document.getElementById('trip-config-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            const input = {
+                currentTime: formData.get('currentTime'),
+                totalFreeTimeMinutes: parseInt(formData.get('totalFreeTimeMinutes')),
+                travelTimeToMarketMinutes: 15, // Mapped constant as per spec
+                travelTimeFromMarketMinutes: 20, // Mapped constant as per spec
+                essentialItems: formData.get('essentialItems').split(',').map(name => ({ name: name.trim(), estimatedMinutes: 10 })),
+                optionalItems: formData.get('optionalItems').split(',').map(name => ({ name: name.trim(), estimatedMinutes: 5 })),
+                averageCheckoutMinutes: 10,
+                peakTrafficWindows: [
+                    { start: "17:00", end: "18:30" }
+                ]
+            };
+
+            this.runScenario(input);
+            document.getElementById('new-trip-modal').classList.add('hidden');
+        });
     }
 
-    addStep(time, title, description) {
-        this.steps.push({ time, title, description });
+    /**
+     * Optimization & Rendering
+     */
+    runScenario(input) {
+        this.currentPlan = this.engine.planTrip(input);
+        this.savePlan();
+        this.renderAll();
     }
 
-    updateCurrentStep(stepIndex) {
-        this.currentStep = stepIndex;
-        this.highlightCurrentStep();
+    savePlan() {
+        localStorage.setItem('marketPlan', JSON.stringify(this.currentPlan));
     }
 
-    highlightCurrentStep() {
-        // Visual feedback for current step
-        console.log(`Current step: ${this.currentStep}`);
+    loadPlan() {
+        const saved = localStorage.getItem('marketPlan');
+        if (saved) {
+            this.currentPlan = JSON.parse(saved);
+            this.renderAll();
+        } else {
+            // Default initial state if no saved plan
+            this.runScenario({
+                currentTime: "16:00",
+                totalFreeTimeMinutes: 120,
+                travelTimeToMarketMinutes: 15,
+                travelTimeFromMarketMinutes: 20,
+                essentialItems: [
+                    { name: "Organic Whole Milk", estimatedMinutes: 10 },
+                    { name: "Free-range Eggs (12pk)", estimatedMinutes: 15 }
+                ],
+                optionalItems: [
+                    { name: "Avocados (3)", estimatedMinutes: 5 },
+                    { name: "Whole Grain Sourdough", estimatedMinutes: 5 }
+                ],
+                averageCheckoutMinutes: 10,
+                peakTrafficWindows: [{ start: "17:00", end: "18:30" }]
+            });
+        }
     }
-}
 
-// Trip Summary Calculator
-class TripSummary {
-    constructor() {
-        this.estimatedTime = 0;
-        this.stops = 0;
-        this.efficiencyScore = 0;
+    renderAll() {
+        if (!this.currentPlan) return;
+        this.renderSteps(this.currentPlan.steps);
+        this.renderShoppingList(this.currentPlan.shoppingList);
+        this.renderSummary(this.currentPlan.summary);
+        this.renderAlerts(this.currentPlan.alerts);
     }
 
-    calculate(tripData) {
-        // Calculate estimated time based on trip steps
-        this.estimatedTime = tripData.steps.reduce((total, step) => {
-            return total + (step.duration || 0);
-        }, 0);
+    renderSteps(steps) {
+        const container = document.getElementById('trip-steps-container');
+        container.innerHTML = steps.map((step, index) => {
+            const isFirst = index === 0;
+            const dotClass = isFirst ? 'bg-primary' : (index === 1 ? 'bg-secondary' : (index === 2 ? 'bg-poolhouse' : 'bg-tidewater'));
 
-        // Count stops
-        this.stops = tripData.stops || 1;
+            return `
+                <div class="relative pl-8 animate-in slide-in-from-left duration-300" style="animation-delay: ${index * 100}ms">
+                    <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 ${dotClass} z-10 flex items-center justify-center">
+                        ${isFirst ? '<div class="w-1.5 h-1.5 bg-white rounded-full"></div>' : ''}
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-secondary uppercase">${step.time}</p>
+                        <p class="font-semibold text-slate-800 dark:text-white">${step.title}</p>
+                        <p class="text-sm text-slate-500">${step.description}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 
-        // Calculate efficiency score (0-100)
-        this.efficiencyScore = this.calculateEfficiency(tripData);
+    renderShoppingList(list) {
+        const highPriorityContainer = document.getElementById('high-priority-list');
+        const generalContainer = document.getElementById('general-items-list');
 
-        return {
-            estimatedTime: this.formatTime(this.estimatedTime),
-            stops: this.stops,
-            efficiencyScore: this.efficiencyScore
+        const createItemHTML = (item, type) => {
+            const isHigh = type === 'high';
+            const baseClass = isHigh ? 'bg-primary/5 border-primary/20' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 border-transparent';
+
+            return `
+                <div class="group flex items-center justify-between p-3 rounded-xl border transition-all ${baseClass} ${item.status ? 'opacity-50' : ''}">
+                    <div class="flex items-center gap-3">
+                        <input class="w-5 h-5 rounded ${isHigh ? 'border-primary text-primary' : 'border-slate-300 dark:border-slate-600 text-secondary'} focus:ring-opacity-20 transition-all cursor-pointer" 
+                               type="checkbox" 
+                               ${item.status ? 'checked' : ''} 
+                               onchange="app.toggleItem('${type}', '${item.name}')"/>
+                        <span class="font-medium ${item.status ? 'line-through text-slate-400' : ''}">${item.name}</span>
+                    </div>
+                    ${isHigh ? '<span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">Essential</span>' :
+                    '<span class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>'}
+                </div>
+            `;
         };
+
+        highPriorityContainer.innerHTML = list.highPriority.map(i => createItemHTML(i, 'high')).join('');
+        generalContainer.innerHTML = list.generalItems.map(i => createItemHTML(i, 'general')).join('');
     }
 
-    calculateEfficiency(tripData) {
-        // Simple efficiency calculation based on time optimization
-        const idealTime = 90; // 1.5 hours in minutes
-        const actualTime = this.estimatedTime;
-        const efficiency = Math.max(0, Math.min(100, (idealTime / actualTime) * 100));
-        return Math.round(efficiency);
+    toggleItem(type, name) {
+        const targetList = type === 'high' ? this.currentPlan.shoppingList.highPriority : this.currentPlan.shoppingList.generalItems;
+        const item = targetList.find(i => i.name === name);
+        if (item) {
+            item.status = !item.status;
+            this.savePlan();
+            this.renderShoppingList(this.currentPlan.shoppingList); // Partial render for speed
+        }
     }
 
-    formatTime(minutes) {
-        const hours = Math.floor(minutes / 60);
-        const mins = minutes % 60;
-        return `${hours}h ${mins}m`;
+    renderSummary(summary) {
+        document.getElementById('summary-total-time').innerText = summary.estimatedTotalTime;
+        document.getElementById('summary-stops').innerText = `${summary.numberOfStops} Market`;
+
+        const effElement = document.getElementById('summary-efficiency');
+        effElement.innerText = `${summary.efficiencyScore}%`;
+
+        // Visual indicator of efficiency
+        effElement.className = `text-xl font-display font-bold ${summary.efficiencyScore > 80 ? 'text-white' : 'text-amber-200'}`;
+    }
+
+    renderAlerts(alerts) {
+        const container = document.getElementById('alerts-container');
+        if (!alerts || alerts.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
+
+        container.innerHTML = alerts.map(alert => `
+            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 p-6 rounded-2xl animate-in fade-in slide-in-from-top duration-500">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-amber-600 dark:text-amber-500">warning</span>
+                    <div>
+                        <h4 class="font-bold text-amber-900 dark:text-amber-200 text-sm">Peak Traffic Alert</h4>
+                        <p class="text-sm text-amber-800 dark:text-amber-400 mt-1">${alert.message}</p>
+                        <button class="mt-3 text-xs font-bold text-amber-900 dark:text-amber-300 underline underline-offset-4 decoration-amber-400/50 hover:text-amber-600 transition-colors">View reroute options</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
     }
 }
 
-// Notification System
-class NotificationSystem {
-    constructor() {
-        this.notifications = [];
-    }
-
-    addNotification(type, title, message) {
-        const notification = {
-            id: Date.now(),
-            type: type, // 'warning', 'info', 'success', 'error'
-            title: title,
-            message: message,
-            timestamp: new Date()
-        };
-        this.notifications.push(notification);
-        this.display(notification);
-    }
-
-    display(notification) {
-        console.log(`[${notification.type.toUpperCase()}] ${notification.title}: ${notification.message}`);
-        // In a real app, this would create a toast notification
-    }
-}
-
-// Initialize Application
+// Global Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize dark mode
-    initDarkMode();
-
-    // Initialize shopping list
-    const shoppingList = new ShoppingList();
-
-    // Initialize trip timeline
-    const tripTimeline = new TripTimeline();
-
-    // Initialize notification system
-    const notifications = new NotificationSystem();
-
-    // Add sample notification
-    notifications.addNotification(
-        'warning',
-        'Peak Traffic Alert',
-        'Heavy congestion expected on Main St between 5:00 PM and 6:30 PM.'
-    );
-
-    console.log('Market Trip Scheduler initialized successfully!');
+    window.app = new UIController();
 });
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        ShoppingList,
-        TripTimeline,
-        TripSummary,
-        NotificationSystem
-    };
-}
