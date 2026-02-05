@@ -118,16 +118,24 @@ class UIController {
             e.preventDefault();
             const formData = new FormData(form);
 
+            // Execute functionality with user-defined constraints
+            const travelForOneWay = parseInt(formData.get('travelTimeMinutes')) || 15;
+
             const input = {
                 currentTime: formData.get('currentTime'),
                 totalFreeTimeMinutes: parseInt(formData.get('totalFreeTimeMinutes')),
-                travelTimeToMarketMinutes: 15, // Mapped constant as per spec
-                travelTimeFromMarketMinutes: 20, // Mapped constant as per spec
+                // Assuming return trip takes roughly same time + 5 min buffer for loading car
+                travelTimeToMarketMinutes: travelForOneWay,
+                travelTimeFromMarketMinutes: travelForOneWay + 5,
                 essentialItems: formData.get('essentialItems').split(',').map(name => ({ name: name.trim(), estimatedMinutes: 10 })),
                 optionalItems: formData.get('optionalItems').split(',').map(name => ({ name: name.trim(), estimatedMinutes: 5 })),
                 averageCheckoutMinutes: 10,
+                // Execute traffic logic with user-defined window
                 peakTrafficWindows: [
-                    { start: "17:00", end: "18:30" }
+                    {
+                        start: formData.get('trafficStart') || "17:00",
+                        end: formData.get('trafficEnd') || "18:30"
+                    }
                 ]
             };
 
