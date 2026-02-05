@@ -81,13 +81,7 @@ class UIController {
      */
     initModal() {
         const modal = document.getElementById('new-trip-modal');
-
-        // Robustly find the "New Trip" button by text content or icon
-        const buttons = Array.from(document.querySelectorAll('button'));
-        const openBtn = buttons.find(btn =>
-            btn.textContent.includes('New Trip') ||
-            btn.querySelector('.material-symbols-outlined')?.textContent === 'add'
-        ) || document.querySelectorAll('header button')[1];
+        const openBtn = document.getElementById('new-trip-btn');
 
         const closeBtns = [
             document.getElementById('close-modal-btn'),
