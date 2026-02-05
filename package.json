@@ -1,0 +1,30 @@
+{
+    "name": "market-trip-scheduler",
+    "version": "1.0.0",
+    "description": "A beautiful market trip scheduler dashboard with shopping list management",
+    "main": "index.html",
+    "scripts": {
+        "dev": "npx serve .",
+        "build": "echo 'No build step required for static site'",
+        "start": "npx serve .",
+        "deploy": "vercel --prod"
+    },
+    "keywords": [
+        "market",
+        "scheduler",
+        "shopping-list",
+        "trip-planner",
+        "grocery",
+        "dashboard"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YOUR_USERNAME/market-trip-scheduler.git"
+    },
+    "homepage": "https://github.com/YOUR_USERNAME/market-trip-scheduler#readme",
+    "devDependencies": {
+        "serve": "^14.2.0"
+    }
+}
