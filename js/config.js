@@ -1,5 +1,8 @@
 // TailwindCSS Configuration
-tailwind.config = {
+// Ensuring we attach to the window object or existing tailwind instance
+window.tailwind = window.tailwind || {};
+
+window.tailwind.config = {
     darkMode: "class",
     theme: {
         extend: {

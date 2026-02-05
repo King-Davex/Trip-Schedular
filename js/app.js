@@ -45,9 +45,13 @@ class UIController {
      */
     initModal() {
         const modal = document.getElementById('new-trip-modal');
-        const openBtn = document.querySelector('button .material-symbols-outlined:contains("add")')?.parentElement ||
-            document.querySelector('button:has(span.material-symbols-outlined:contains("add"))') ||
-            document.querySelectorAll('header button')[1]; // Fallback to 2nd header button
+
+        // Robustly find the "New Trip" button by text content or icon
+        const buttons = Array.from(document.querySelectorAll('button'));
+        const openBtn = buttons.find(btn =>
+            btn.textContent.includes('New Trip') ||
+            btn.querySelector('.material-symbols-outlined')?.textContent === 'add'
+        ) || document.querySelectorAll('header button')[1];
 
         const closeBtns = [
             document.getElementById('close-modal-btn'),
@@ -55,7 +59,9 @@ class UIController {
             modal
         ];
 
-        openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+        if (openBtn) {
+            openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+        }
 
         closeBtns.forEach(btn => {
             if (!btn) return;
