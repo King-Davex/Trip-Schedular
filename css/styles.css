@@ -2,7 +2,12 @@
 
 /* Daisy Pattern Background */
 .daisy-pattern {
-    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuC8kidon1Zbs81beuuzrGBev0Ymz7HWBKMwwcfiDzahXXHOxvQeMdDiHSX_M-7oo4TDxeRO47WZvUK9KgY_iZ6CbnfVgVR6qKF7_Krl0FimXkOg34il-POK4nCE7yIlRjy1iOp9DQKYv57TCbqW2Wnb3vh079_vXZhR5YuewBXjsIzWPM7teb8HRrx1XmVjM1SWhV01HINysQP8h_Fwf89BUWjUS39PFZzj8JVlOq_KU6xJEy2sw3OIIJwnmKugU2nSZSzG97QCH3U);
+    /* Fallback gradient if image fails */
+    background-image:
+        linear-gradient(to bottom right, rgba(0, 92, 156, 0.03), rgba(74, 153, 209, 0.03)),
+        url(https://lh3.googleusercontent.com/aida-public/AB6AXuC8kidon1Zbs81beuuzrGBev0Ymz7HWBKMwwcfiDzahXXHOxvQeMdDiHSX_M-7oo4TDxeRO47WZvUK9KgY_iZ6CbnfVgVR6qKF7_Krl0FimXkOg34il-POK4nCE7yIlRjy1iOp9DQKYv57TCbqW2Wnb3vh079_vXZhR5YuewBXjsIzWPM7teb8HRrx1XmVjM1SWhV01HINysQP8h_Fwf89BUWjUS39PFZzj8JVlOq_KU6xJEy2sw3OIIJwnmKugU2nSZSzG97QCH3U);
+    background-size: cover;
+    background-position: center;
 }
 
 /* Custom Scrollbar Styling */
@@ -20,7 +25,8 @@
 }
 
 /* Smooth transitions for all interactive elements */
-button, a {
+button,
+a {
     transition: all 0.2s ease-in-out;
 }
 
@@ -53,9 +59,12 @@ nav a:hover {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0;
     }
+
     50% {
         opacity: 0.5;
     }
@@ -67,9 +76,12 @@ input[type="checkbox"]:checked {
 }
 
 @keyframes checkBounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
@@ -107,7 +119,7 @@ input[type="checkbox"]:checked {
     .grid-cols-12 {
         grid-template-columns: 1fr;
     }
-    
+
     .col-span-4,
     .col-span-5,
     .col-span-3 {
