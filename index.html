@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Market Trip Scheduler Dashboard</title>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- TailwindCSS Configuration -->
+    <script src="js/config.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
+    <div class="flex h-screen overflow-hidden daisy-pattern">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-primary text-white flex flex-col shadow-xl z-20">
+            <div class="p-6 flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">filter_vintage</span>
+                </div>
+                <h1 class="font-display font-bold text-xl tracking-tight">MarketFlow</h1>
+            </div>
+
+            <nav class="flex-1 px-4 py-4 space-y-2">
+                <a class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-lg font-medium" href="#">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors" href="#">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    Trips
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors" href="#">
+                    <span class="material-symbols-outlined">shopping_basket</span>
+                    Groceries
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors" href="#">
+                    <span class="material-symbols-outlined">analytics</span>
+                    Budgeting
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors" href="#">
+                    <span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+            </nav>
+
+            <div class="p-6">
+                <div class="bg-secondary p-4 rounded-xl flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-tidewater/30 overflow-hidden">
+                        <img alt="User Avatar" class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVF45mUUtqSlg1pK8C3j5n-WmHNLtY2Qtk0XXoG3qK-_aGoC7nwGmpCDV9iSWo_RdGKmR-NS7qKp8kaKSlrwP8NtukvukohO2pQephu5_2DO6PktYImfOcGYw6Pl4fsdrzzgT1NdBhLkk4fmWaJo29DPdid7XRPHguHu8Sh_QQTMBpcRysMtpSyUgEUdkkeH1UStuXZ6dLRCKV_-VGPIz0gHu51KQO5IfVfZpgs7S-9HaQ6trVHMIEK0d_PIEfkoZMR3wlz9rKlbI" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold truncate">Alex Marshall</p>
+                        <p class="text-xs text-white/70">Pro Account</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto custom-scrollbar p-8">
+            <header class="flex justify-between items-center mb-10">
+                <div>
+                    <h2 class="text-3xl font-display font-bold text-slate-900 dark:text-white">Trip Scheduler</h2>
+                    <p class="text-slate-500 dark:text-slate-400">Optimizing your market run for Thursday, Oct 24th</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium shadow-sm">
+                        <span class="material-symbols-outlined text-base">share</span>
+                        Share Trip
+                    </button>
+                    <button
+                        class="flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:brightness-110 transition-all">
+                        <span class="material-symbols-outlined text-base">add</span>
+                        New Trip
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-12 gap-8">
+                <!-- Trip Steps Column -->
+                <div class="col-span-4 space-y-6">
+                    <div
+                        class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg flex items-center gap-2">
+                                <span class="material-symbols-outlined text-secondary">schedule</span>
+                                Trip Steps
+                            </h3>
+                            <span
+                                class="px-2 py-1 bg-tidewater/30 text-poolhouse text-xs font-bold rounded uppercase tracking-wider">Active</span>
+                        </div>
+                        <div
+                            class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-100 dark:before:bg-slate-700">
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-primary z-10 flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-secondary uppercase">4:00 PM</p>
+                                    <p class="font-semibold text-slate-800 dark:text-white">Depart Office</p>
+                                    <p class="text-sm text-slate-500">Commute to Whole Foods (15 mins)</p>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-secondary z-10">
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-secondary uppercase">4:15 PM - 5:15 PM</p>
+                                    <p class="font-semibold text-slate-800 dark:text-white">Grocery Shopping</p>
+                                    <p class="text-sm text-slate-500">Targeting 60 mins efficiency window</p>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-poolhouse z-10">
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-secondary uppercase">5:15 PM</p>
+                                    <p class="font-semibold text-slate-800 dark:text-white">Checkout &amp; Loading</p>
+                                    <p class="text-sm text-slate-500">Anticipated wait time: 10 mins</p>
+                                </div>
+                            </div>
+                            <div class="relative pl-8">
+                                <div
+                                    class="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800 bg-tidewater z-10">
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-secondary uppercase">5:25 PM</p>
+                                    <p class="font-semibold text-slate-800 dark:text-white">Return Home</p>
+                                    <p class="text-sm text-slate-500">Expected arrival: 5:45 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shopping List Column -->
+                <div class="col-span-5 space-y-6">
+                    <div
+                        class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg flex items-center gap-2">
+                                <span class="material-symbols-outlined text-secondary">checklist_rtl</span>
+                                Shopping List
+                            </h3>
+                            <div class="flex items-center gap-2 text-xs text-slate-400">
+                                <span class="w-2 h-2 rounded-full bg-primary"></span> High Priority
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <h4 class="text-xs font-bold text-poolhouse uppercase tracking-widest mb-4">High Priority
+                            </h4>
+                            <div class="space-y-3">
+                                <div
+                                    class="group flex items-center justify-between p-3 rounded-xl bg-primary/5 border border-primary/20">
+                                    <div class="flex items-center gap-3">
+                                        <input class="w-5 h-5 rounded border-primary text-primary focus:ring-primary/20"
+                                            type="checkbox" />
+                                        <span class="font-medium">Organic Whole Milk</span>
+                                    </div>
+                                    <span
+                                        class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">Essential</span>
+                                </div>
+                                <div
+                                    class="group flex items-center justify-between p-3 rounded-xl bg-primary/5 border border-primary/20">
+                                    <div class="flex items-center gap-3">
+                                        <input class="w-5 h-5 rounded border-primary text-primary focus:ring-primary/20"
+                                            type="checkbox" />
+                                        <span class="font-medium">Free-range Eggs (12pk)</span>
+                                    </div>
+                                    <span
+                                        class="text-xs bg-primary text-white px-2 py-0.5 rounded-full">Essential</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-poolhouse uppercase tracking-widest mb-4">General Items
+                            </h4>
+                            <div class="space-y-3">
+                                <div
+                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
+                                    <div class="flex items-center gap-3">
+                                        <input
+                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
+                                            type="checkbox" />
+                                        <span class="text-slate-600 dark:text-slate-300">Avocados (3)</span>
+                                    </div>
+                                    <span
+                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
+                                </div>
+                                <div
+                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
+                                    <div class="flex items-center gap-3">
+                                        <input
+                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
+                                            type="checkbox" />
+                                        <span class="text-slate-600 dark:text-slate-300">Whole Grain Sourdough</span>
+                                    </div>
+                                    <span
+                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
+                                </div>
+                                <div
+                                    class="group flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 border border-transparent">
+                                    <div class="flex items-center gap-3">
+                                        <input
+                                            class="w-5 h-5 rounded border-slate-300 dark:border-slate-600 text-secondary focus:ring-secondary/20"
+                                            type="checkbox" />
+                                        <span class="text-slate-600 dark:text-slate-300">Greek Yogurt</span>
+                                    </div>
+                                    <span
+                                        class="material-symbols-outlined text-slate-300 group-hover:text-slate-400 cursor-move">drag_indicator</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary & Insights Column -->
+                <div class="col-span-3 space-y-6">
+                    <div class="bg-primary text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
+                        <span
+                            class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10">filter_vintage</span>
+                        <h3 class="font-bold text-lg mb-4">Trip Summary</h3>
+                        <div class="space-y-4 relative z-10">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-2">
+                                <span class="text-white/70 text-sm">Estimated Time</span>
+                                <span class="text-2xl font-display font-bold">1h 45m</span>
+                            </div>
+                            <div class="flex justify-between items-end border-b border-white/20 pb-2">
+                                <span class="text-white/70 text-sm">Stops</span>
+                                <span class="text-xl font-display font-bold">1 Market</span>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-white/70 text-sm">Efficiency Score</span>
+                                <span class="text-xl font-display font-bold">92%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 p-6 rounded-2xl">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-amber-600 dark:text-amber-500">warning</span>
+                            <div>
+                                <h4 class="font-bold text-amber-900 dark:text-amber-200 text-sm">Peak Traffic Alert</h4>
+                                <p class="text-sm text-amber-800 dark:text-amber-400 mt-1">Heavy congestion expected on
+                                    Main St between 5:00 PM and 6:30 PM.</p>
+                                <button
+                                    class="mt-3 text-xs font-bold text-amber-900 dark:text-amber-300 underline underline-offset-4 decoration-amber-400/50">View
+                                    reroute options</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-white mb-4">Market Insights</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-tidewater flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-poolhouse text-sm">inventory_2</span>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold">Stock Warning</p>
+                                    <p class="text-[11px] text-slate-500">Produce delivery delayed by 2h.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-secondary/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-secondary text-sm">savings</span>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold">Best Price Alert</p>
+                                    <p class="text-[11px] text-slate-500">Berries are 15% off today.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Application JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>
