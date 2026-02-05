@@ -48,17 +48,34 @@
 
 <body
     class="bg-background-light dark:bg-background-dark font-sans text-slate-800 dark:text-slate-200 transition-colors duration-200">
-    <div class="flex h-screen overflow-hidden daisy-pattern">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-primary text-white flex flex-col shadow-xl z-20">
-            <div class="p-6 flex items-center gap-3">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary">filter_vintage</span>
+    <div class="flex h-screen overflow-hidden daisy-pattern flex-col md:flex-row">
+        <!-- Mobile Header -->
+        <header class="md:hidden bg-primary text-white p-4 flex justify-between items-center shadow-md z-30">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined">filter_vintage</span>
+                <h1 class="font-display font-bold text-lg">MarketFlow</h1>
+            </div>
+            <button id="mobile-menu-btn" class="p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </header>
+
+        <!-- Sidebar (Desktop: Visible | Mobile: Hidden by default) -->
+        <aside id="sidebar"
+            class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 w-64 bg-primary text-white flex flex-col shadow-xl z-40 transition-transform duration-300 ease-in-out h-full">
+            <div class="p-6 flex items-center justify-between md:justify-start gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">filter_vintage</span>
+                    </div>
+                    <h1 class="font-display font-bold text-xl tracking-tight">MarketFlow</h1>
                 </div>
-                <h1 class="font-display font-bold text-xl tracking-tight">MarketFlow</h1>
+                <button id="close-sidebar-btn" class="md:hidden text-white/80 hover:text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
             </div>
 
-            <nav class="flex-1 px-4 py-4 space-y-2">
+            <nav class="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
                 <a class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-lg font-medium" href="#">
                     <span class="material-symbols-outlined">dashboard</span>
                     Dashboard
@@ -81,9 +98,9 @@
                 </a>
             </nav>
 
-            <div class="p-6">
+            <div class="p-6 mt-auto">
                 <div class="bg-secondary p-4 rounded-xl flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-tidewater/30 overflow-hidden">
+                    <div class="w-10 h-10 rounded-full bg-tidewater/30 overflow-hidden flex-shrink-0">
                         <img alt="User Avatar" class="w-full h-full object-cover"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVF45mUUtqSlg1pK8C3j5n-WmHNLtY2Qtk0XXoG3qK-_aGoC7nwGmpCDV9iSWo_RdGKmR-NS7qKp8kaKSlrwP8NtukvukohO2pQephu5_2DO6PktYImfOcGYw6Pl4fsdrzzgT1NdBhLkk4fmWaJo29DPdid7XRPHguHu8Sh_QQTMBpcRysMtpSyUgEUdkkeH1UStuXZ6dLRCKV_-VGPIz0gHu51KQO5IfVfZpgs7S-9HaQ6trVHMIEK0d_PIEfkoZMR3wlz9rKlbI" />
                     </div>
@@ -95,32 +112,37 @@
             </div>
         </aside>
 
+        <!-- Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden glass-effect"></div>
+
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto custom-scrollbar p-8">
-            <header class="flex justify-between items-center mb-10">
+        <main class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 w-full">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-10 gap-4">
                 <div>
-                    <h2 class="text-3xl font-display font-bold text-slate-900 dark:text-white">Trip Scheduler</h2>
-                    <p class="text-slate-500 dark:text-slate-400">Optimizing your market run for Thursday, Oct 24th</p>
+                    <h2 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white">Trip
+                        Scheduler</h2>
+                    <p class="text-sm md:text-base text-slate-500 dark:text-slate-400">Optimizing your market run for
+                        Thursday, Oct 24th</p>
                 </div>
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3 w-full md:w-auto">
                     <button id="darkModeToggle"
-                        class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium shadow-sm">
+                        class="flex-1 md:flex-none justify-center flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium shadow-sm">
                         <span class="material-symbols-outlined text-base">dark_mode</span>
                         Theme
                     </button>
                     <button
-                        class="flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:brightness-110 transition-all">
+                        class="flex-1 md:flex-none justify-center flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:brightness-110 transition-all">
                         <span class="material-symbols-outlined text-base">add</span>
                         New Trip
                     </button>
                 </div>
             </header>
 
-            <div class="grid grid-cols-12 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                 <!-- Trip Steps Column -->
-                <div class="col-span-4 space-y-6">
+                <div class="col-span-1 md:col-span-4 space-y-6">
                     <div
-                        class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        class="bg-white dark:bg-slate-800 p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-bold text-lg flex items-center gap-2">
                                 <span class="material-symbols-outlined text-secondary">schedule</span>
@@ -137,9 +159,9 @@
                 </div>
 
                 <!-- Shopping List Column -->
-                <div class="col-span-5 space-y-6">
+                <div class="col-span-1 md:col-span-5 space-y-6">
                     <div
-                        class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        class="bg-white dark:bg-slate-800 p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-bold text-lg flex items-center gap-2">
                                 <span class="material-symbols-outlined text-secondary">checklist_rtl</span>
@@ -167,7 +189,7 @@
                 </div>
 
                 <!-- Summary & Insights Column -->
-                <div class="col-span-3 space-y-6">
+                <div class="col-span-1 md:col-span-3 space-y-6">
                     <div class="bg-primary text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
                         <span
                             class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10">filter_vintage</span>

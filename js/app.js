@@ -12,6 +12,7 @@ class UIController {
 
     init() {
         this.initDarkMode();
+        this.initSidebar();
         this.initModal();
         this.initForm();
         this.loadPlan();
@@ -38,6 +39,41 @@ class UIController {
             const nextTheme = html.classList.contains('dark') ? 'light' : 'dark';
             applyTheme(nextTheme);
         });
+    }
+
+    /**
+     * Mobile Sidebar
+     */
+    initSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const openBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-sidebar-btn');
+
+        const toggleSidebar = (show) => {
+            if (!sidebar || !overlay) return;
+
+            if (show) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        };
+
+        if (openBtn) openBtn.addEventListener('click', () => toggleSidebar(true));
+        if (closeBtn) closeBtn.addEventListener('click', () => toggleSidebar(false));
+        if (overlay) overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // Close sidebar on navigation
+        if (sidebar) {
+            sidebar.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => toggleSidebar(false));
+            });
+        }
     }
 
     /**

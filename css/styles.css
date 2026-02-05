@@ -114,15 +114,21 @@ input[type="checkbox"]:checked {
     }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .grid-cols-12 {
-        grid-template-columns: 1fr;
-    }
+/* Glassmorphism Effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-    .col-span-4,
-    .col-span-5,
-    .col-span-3 {
-        grid-column: span 1;
+/* Ensure modal is responsive */
+#new-trip-modal .p-8 {
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    #new-trip-modal .p-8 {
+        padding: 2rem;
     }
 }
