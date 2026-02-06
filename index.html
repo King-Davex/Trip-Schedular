@@ -80,10 +80,11 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     Dashboard
                 </a>
-                <a class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors" href="#">
-                    <span class="material-symbols-outlined">settings</span>
-                    Settings
-                </a>
+                <button id="darkModeToggle"
+                    class="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition-colors text-left">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                    Theme / Settings
+                </button>
             </nav>
 
             <div class="p-6 mt-auto">
@@ -113,11 +114,7 @@
                         Thursday, Oct 24th</p>
                 </div>
                 <div class="flex items-center gap-3 w-full md:w-auto">
-                    <button id="darkModeToggle"
-                        class="flex-1 md:flex-none justify-center flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium shadow-sm">
-                        <span class="material-symbols-outlined text-base">dark_mode</span>
-                        Theme
-                    </button>
+
                     <button id="new-trip-btn"
                         class="flex-1 md:flex-none justify-center flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:brightness-110 transition-all">
                         <span class="material-symbols-outlined text-base">add</span>
